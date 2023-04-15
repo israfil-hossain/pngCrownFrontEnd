@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Set global font styles */
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,Poppins;
+  background-color: rgb(255, 255, 255);
+}
+
+/* Set global link styles */
+a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+.alert-error {
+  @apply my-3 rounded-lg bg-red-100 p-3 text-red-700;
+}
+
+.alert-success {
+  @apply my-3 rounded-lg bg-green-100 p-3 text-green-700;
+}
+.min-h-screen-custom {
+  min-height: 100vh !important;
+}
+
+.photo-list{
+  width: 90%;
+  list-style :  none;
+  margin : 20px auto;
+}
+.photo-item{
+  display: flex; 
+  width:100%; 
+  border: 4px double rgba(0,0,0,.12); 
+}
+.photo-item img{
+  display:flex; 
+  width:100%; 
+  border: 4px double rgba(0,0,0,.12);
+}
