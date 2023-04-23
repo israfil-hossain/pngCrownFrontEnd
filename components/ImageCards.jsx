@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { BsHeart } from "react-icons/bs";
 import {useRouter} from 'next/router'; 
+import { Box, ImageList } from "@mui/material";
 
 const ImageCards = ({ image, name, tags,id }) => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const ImageCards = ({ image, name, tags,id }) => {
   };
   return (
     <div
-      className="relative group rounded-sm overflow-hidden shadow-md hover:shadow-lg border"
+      className="relative my-2 group rounded-sm overflow-hidden shadow-md hover:shadow-lg border"
       style={{ height: `${getRandomHeight()}px` }}
       onClick={handleClick}
     >
@@ -42,6 +43,7 @@ const ImageCards = ({ image, name, tags,id }) => {
           ))}
       </div>
     </div>
+   
   );
 };
 

@@ -9,7 +9,17 @@ const Categories = () => {
     dots: false,
     infinite: true,
     speed: 800,
-    slidesToShow: 4,
+    slidesToShow: 10,
+    slidesToScroll: 3,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 4000,
+  };
+  const settings2 = {
+    dots: false,
+    infinite: true,
+    speed: 800,
+    slidesToShow: 3,
     slidesToScroll: 3,
     arrows: false,
     autoplay: true,
@@ -47,22 +57,40 @@ const Categories = () => {
   // console.log("Data for Category : ", data);
 
   return (
-    <div className="w-full lg:w-2/3 justify-center  mx-auto">
+    <>
+    <div className="w-full lg:w-2/3 justify-center hidden lg:block text-center items-center mx-auto">
       <Slider {...settings}>
         {data?.map((item) => (
           <div
-            className="px-2 "
+            className="px-0 "
             key={item._id}
 
           >
-            <div className="border bg-indigo-50  border-gray-200 px-2 py-1 rounded-md items-center text-center "
+            <div className="   border-gray-200 py-1 rounded-md items-center text-center "
             onClick={()=>handleSearch(item?.cat_name)}>
-              <h3 className="text-lg font-normal ">{item?.cat_name}</h3>
+              <h3 className="text-lg text-[#0D98C9] font-normal "><u>{item?.cat_name}</u></h3>
             </div>
           </div>
         ))}
       </Slider>
     </div>
+    <div className="w-full mt-[-100px] justify-center  text-center items-center mx-auto lg:hidden">
+      <Slider {...settings2}>
+        {data?.map((item) => (
+          <div
+            className="px-0 "
+            key={item._id}
+
+          >
+            <div className="   border-gray-200 py-1 rounded-md items-center text-center "
+            onClick={()=>handleSearch(item?.cat_name)}>
+              <h3 className="text-lg text-[#0D98C9] font-normal "><u>{item?.cat_name}</u></h3>
+            </div>
+          </div>
+        ))}
+      </Slider>
+    </div>
+    </>
   );
 };
 

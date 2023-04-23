@@ -78,7 +78,7 @@ const ImageSlider = () => {
  
 
   return (
-    <div className="h-3/5 px-2 mb-10 static overflow-hidden">
+    <div className="h-3/5 px-2 mb-10 static overflow-hidden opactiy-95 bg-gray-400 bg-opacity-95 ">
       <Slider {...settings}>
         {data?.map((item) => (
           <div key={item?._id} className="h-96 w-full">
@@ -108,16 +108,25 @@ const ImageSlider = () => {
           </div>
         ))}
       </Slider>
-      <div className="absolute top-56  flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
-        <div className="text-gray-700 text-3xl font-[800] sm:px-5 flex font-sans">
+      <div className="absolute top-56 hidden lg:flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
+        <div className="text-gray-50 text-3xl  font-[800] sm:px-5 flex font-sans">
           High-quality PNG images are available for free
         </div>
-        <div className="text-gray-400 mt-2 sm:px-5 font-sans">
+        <div className="text-white mt-2 sm:px-5 font-sans">
           Over 2.7 million+ high quality stock images, videos and music shared
           by our talented community
         </div>
       </div>
-      <div className="absolute top-80 mt-8  flex w-full flex-col items-center text-center justify-center mx-auto">
+      <div className="absolute top-28 lg:hidden  flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
+        <div className="text-gray-50 text-md  font-[900] px-5 flex font-sans">
+          High-quality PNG images are available for free
+        </div>
+        <div className="text-white mt-1 sm:px-5 font-sans">
+          Over 2.7 million+ high quality stock images, videos and music shared
+          by our talented community
+        </div>
+      </div>
+      <div className="absolute top-80 mt-8  lg:flex hidden w-full flex-col items-center text-center justify-center mx-auto">
         <div className="relative rounded-md shadow-sm w-1/2">
           <form onSubmit={handleSearch}>
             <input
@@ -126,6 +135,25 @@ const ImageSlider = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="py-4 pl-5 w-full rounded-md leading-3 bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
+            />
+            <button
+              type="submit"
+              className="absolute hover:cursor-pointer inset-y-0 right-0 px-3 flex items-center hover:bg-indigo-700 hover:rounded-r-md hover:text-white"
+            >
+              <FiSearch className="w-6 h-6 hover:text-gray-50 " />
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="absolute  top-56   lg:hidden flex w-[100%]  items-center text-center justify-center ">
+        <div className="relative rounded-md shadow-sm ">
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="py-4 px-24 pl-5 rounded-md leading-2 bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
             />
             <button
               type="submit"
