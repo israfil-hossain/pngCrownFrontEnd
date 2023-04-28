@@ -4,6 +4,8 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import { BiCameraOff } from "react-icons/bi";
+import AddSection from "@/components/AddSection";
+import ImageCardList from "@/components/common/ImageCardList";
 
 const Search = () => {
   const router = useRouter();
@@ -42,29 +44,38 @@ const Search = () => {
   }
 
   return (
-    <div className="mt-10">
-      {filteredData.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 container ">
-          {filteredData?.map((item) => (
-            <ImageCards
-              image={item?.imageUrl}
-              key={item?._id}
-              name={item?.imageName}
-              tags={item?.tags}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-screen">
-          <div className="border rounded-md px-16 py-12">
-            <BiCameraOff className="w-40 h-16 text-red-400" />
-            <span className="text-center items-center justify-center">
-              No Image found ...
-            </span>
+   
+
+      <div className="mt-10 flex flex-col">
+        {filteredData.length > 0 ? (
+          <>
+          <div className="lg:flex hidden px-5">
+            {/* */}
+            <ImageCardList images={filteredData} />
           </div>
-        </div>
-      )}
-    </div>
+          <div className="lg:hidden flex-col flex px-5 absolute">
+          {filteredData?.map((item) => (
+              <ImageCards
+                image={item?.imageUrl}
+                key={item?._id}
+                name={item?.imageName}
+                tags={item?.tags}
+              />
+            ))} 
+
+          </div>
+          </>
+        ) : (
+          <div className="flex justify-center items-center h-screen">
+            <div className="border rounded-md px-16 py-12">
+              <BiCameraOff className="w-40 h-16 text-red-400" />
+              <span className="text-center items-center justify-center">
+                No Image found ...
+              </span>
+            </div>
+          </div>
+        )}
+      </div>
   );
 };
 

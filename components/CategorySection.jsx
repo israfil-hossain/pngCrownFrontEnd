@@ -19,7 +19,7 @@ const Categories = () => {
     dots: false,
     infinite: true,
     speed: 800,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 3,
     arrows: false,
     autoplay: true,
@@ -74,7 +74,7 @@ const Categories = () => {
         ))}
       </Slider>
     </div>
-    <div className="w-full mt-[-100px] justify-center  text-center items-center mx-auto lg:hidden">
+    <div className="w-full justify-center  text-center items-center mx-auto lg:hidden">
       <Slider {...settings2}>
         {data?.map((item) => (
           <div

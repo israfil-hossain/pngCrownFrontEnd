@@ -31,17 +31,7 @@ export default function Home() {
   console.log("Image data is ", data);
   return (
     <>
-      <Head>
-        <title>Pngcrown</title>
-        <meta name="description" content="Free Png Image Download here" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/pngcrown.png" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7562191749444029"
-          crossorigin="anonymous"
-        ></script>
-      </Head>
+      
       <div className="">
         <ImageSlider />
 
@@ -55,34 +45,23 @@ export default function Home() {
         <div className="h-8"></div>
 
         <div className=" flex-row hidden lg:flex">
-          <div className="flex flex-col w-[200px] px-1 bg-gray-50">
+          {/* <div className="flex flex-col w-[200px] px-1 bg-gray-50">
             <AddSection height={"400px"} width={"200px"} />
             <hr className="my-2" />
             <AddSection height={"400px"} width={"200px"} />
+          </div> */}
+          <div className="hidden lg:block flex-col px-5">
+            <ImageCardList images={data} />
+            
           </div>
-          <div className="hidden lg:block flex-col ">
-            <ImageCardList images={data}/>
-            {/* <ImageList variant="masonry" cols={3} gap={8}>
-              {data?.map((item) => (
-                <ImageListItem key={item._id}>
-                  <img
-                    src={`${item.imageUrl}?w=248&fit=crop&auto=format`}
-                    srcSet={`${item.imageUrl}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                    alt={item.imageName}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList> */}
-          </div>
-          <div className="flex-col w-[200px] px-1 bg-gray-50">
-            {/* <div className="grid gap-4 lg:grid-cols-4 xl:grid-cols-4 container lg:flex hidden"> */}
+          {/* <div className="flex-col w-[200px] px-1 bg-gray-50">
+             <div className="grid gap-4 lg:grid-cols-4 xl:grid-cols-4 container lg:flex hidden"> 
             <AddSection height={"400px"} width={"200px"} />
-          </div>
+          </div> */}
         </div>
-        <div className="mb-8   lg:hidden ">
+        {/* <div className="mb-8   lg:hidden ">
           <MobileAdSection />
-        </div>
+        </div> */}
         <div className="grid  gap-4  px-4 container lg:hidden ">
           {data?.map((item) => (
             <ImageCards

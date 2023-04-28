@@ -13,7 +13,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Modal from "@/components/common/CommonModal";
 import { AuthContext } from "../../context/AuthContext";
 
-const SinglePhotos = () => {
+const DownloadPhotos = () => {
   const { isAuth } = useContext(AuthContext);
 
   const router = useRouter();
@@ -29,6 +29,14 @@ const SinglePhotos = () => {
   function onChange(value) {
     console.log("Captcha value:", value);
     setVerified(true);
+  }
+  const [isRobot, setIsRobot] = useState(true);
+
+  function onChange(value) {
+    // If the user is verified, enable the download button
+    if (value) {
+      setIsRobot(false);
+    }
   }
   useEffect(() => {
     fetchData(id);
@@ -56,46 +64,46 @@ const SinglePhotos = () => {
   console.log("Tags data is :", tags);
 
   // console.log("Single Data is :", singleData);
-  // const downloadImage = async (imageName, imageUrl) => {
-  //   const downloadCount = parseInt(
-  //     localStorage.getItem("downloadCount") || "0"
-  //   );
-  //   if (!isAuth && downloadCount >= MAX_DOWNLOADS) {
-  //     setShowSignInModal(true);
-  //     return;
+  const downloadImage = async (imageName, imageUrl) => {
+    const downloadCount = parseInt(
+      localStorage.getItem("downloadCount") || "0"
+    );
+    if (!isAuth && downloadCount >= MAX_DOWNLOADS) {
+      setShowSignInModal(true);
+      return;
 
-  //     // redirect the user to the login page if they're not logged in and have already downloaded 10 images
-  //   }
-  //   fetch(imageUrl)
-  //     .then((response) => response.blob())
-  //     .then((blob) => {
-  //       // Create a temporary <a> tag with download attribute
-  //       const link = document.createElement("a");
-  //       link.href = URL.createObjectURL(blob);
-  //       link.download = `${imageName}.png`;
+      // redirect the user to the login page if they're not logged in and have already downloaded 10 images
+    }
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        // Create a temporary <a> tag with download attribute
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `${imageName}.png`;
 
-  //       // Programmatically click the <a> tag to start the download
-  //       link.click();
+        // Programmatically click the <a> tag to start the download
+        link.click();
 
-  //       // Revoke the URL to free up memory
-  //       URL.revokeObjectURL(link.href);
+        // Revoke the URL to free up memory
+        URL.revokeObjectURL(link.href);
 
-  //       // increment the download count and store it in localStorage
-  //       localStorage.setItem("downloadCount", downloadCount + 1);
+        // increment the download count and store it in localStorage
+        localStorage.setItem("downloadCount", downloadCount + 1);
 
-  //       // Call the image download API using Axios
-  //       API.get(`/image/download/${imageName}`)
-  //         .then((response) => {
-  //           console.log("Image download tracked successfully");
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error tracking image download:", error);
-  //         });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error downloading image:", error);
-  //     });
-  // };
+        // Call the image download API using Axios
+        API.get(`/image/download/${imageName}`)
+          .then((response) => {
+            console.log("Image download tracked successfully");
+          })
+          .catch((error) => {
+            console.error("Error tracking image download:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Error downloading image:", error);
+      });
+  };
 
   const { data, isLoading, isError } = useQuery(
     "images",
@@ -113,10 +121,6 @@ const SinglePhotos = () => {
 
   console.log("Filtered data: ", filteredData);
 
-  const handleClick = () => {
-    router.push(`/download/${id}`);
-  };
-
   return (
     <>
       {ispLoading ? (
@@ -127,12 +131,17 @@ const SinglePhotos = () => {
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <div
               className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
-              onClick={handleClick}
+              onClick={() =>
+                downloadImage(singleData?.imageName, singleData?.imageUrl)
+              }
             >
               <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
               {"Free Download"}
             </div>
-            
+            <ReCAPTCHA
+              sitekey="6LfdjsYlAAAAAJcz_ZDZbJdRVJD1luiGDzOCskcZ"
+              onChange={onChange}
+            />
           </div>
           <div className="relative pt-2 w-full flex justify-center  lg:hidden">
             <div
@@ -234,10 +243,15 @@ const SinglePhotos = () => {
               </div>
               <hr className="mb-5 " />
               <div className="flex flex-col justify-center items-center ">
-                
+                <ReCAPTCHA
+                  sitekey="6LfdjsYlAAAAAJcz_ZDZbJdRVJD1luiGDzOCskcZ"
+                  onChange={onChange}
+                />
                 <div
                   className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
-                  onClick={handleClick}
+                  onClick={() =>
+                    downloadImage(singleData?.imageName, singleData?.imageUrl)
+                  }
                 >
                   <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
                   {"Free Download"}
@@ -307,21 +321,6 @@ const SinglePhotos = () => {
           <div className=" py-2">
             <AddSection height={"200px"} width={"500px"} slot={"9661024485"}/>
           </div>
-          <div className=" text-center text-xl font-sans font-semibold mt-6">
-            Related Png Images
-          </div>
-          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4  mt-5">
-            {filteredData?.map((item) => (
-              <ImageCards
-                image={item?.imageUrl}
-                key={item?._id}
-                name={item?.imageName}
-                tags={item?.tags}
-                id={item?._id}
-              />
-            ))}
-          </div>
-
           <Modal isOpen={showSignInModal} onClose={handleCancel}>
             <div className="text-center">
               <p className="mb-2 py-5">
@@ -347,4 +346,4 @@ const SinglePhotos = () => {
   );
 };
 
-export default SinglePhotos;
+export default DownloadPhotos;
