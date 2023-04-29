@@ -114,7 +114,7 @@ const SinglePhotos = () => {
   console.log("Filtered data: ", filteredData);
 
   const handleClick = () => {
-    router.push(`/download/${id}`);
+    window.open(`/download/${id}`, '_blank');
   };
 
   return (
@@ -126,11 +126,11 @@ const SinglePhotos = () => {
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <div
-              className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
+              className="w-88 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
               onClick={handleClick}
             >
-              <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
-              {"Free Download"}
+              <FiDownload className="mt-1 font-bold text-xl mx-2 text-white" />{" "}
+              {"Click Here To Download"}
             </div>
             
           </div>
@@ -236,11 +236,11 @@ const SinglePhotos = () => {
               <div className="flex flex-col justify-center items-center ">
                 
                 <div
-                  className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
+                  className="w-92  cursor-pointer justify-between rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
                   onClick={handleClick}
                 >
-                  <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
-                  {"Free Download"}
+                  <FiDownload className="mt-1 font-bold text-xl mx-2 text-white" />{"   "}
+                  {"Click Here To Download"}
                 </div>
               </div>
               <div className="bg-gray-50 rounded-md border w-96 h-40 mt-5 ">

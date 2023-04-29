@@ -106,7 +106,7 @@ const ImageSlider = () => {
           </div>
         ))}
       </Slider>
-      <div className="absolute top-56 hidden lg:flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
+      <div className="absolute top-60 hidden lg:flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
         <div className="text-gray-50 text-3xl  font-[800] sm:px-5 flex font-sans">
           High-quality PNG images are available for free
         </div>
@@ -115,7 +115,7 @@ const ImageSlider = () => {
           by our talented community
         </div>
       </div>
-      <div className="absolute top-28 lg:hidden overflow-hidden flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
+      <div className="absolute top-32 lg:hidden overflow-hidden flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
         <div className="text-gray-50 text-md  font-[900] px-5 flex font-sans">
           High-quality PNG images are available for free
         </div>

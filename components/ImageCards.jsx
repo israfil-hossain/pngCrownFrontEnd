@@ -9,6 +9,9 @@ const ImageCards = ({ image, name, tags, id }) => {
   const handleClick = () => {
     window.open(`/photos/${id}`, '_blank');
   };
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+  };
   
   console.log("Tags", tags);
   const getRandomHeight = () => {
@@ -21,6 +24,7 @@ const ImageCards = ({ image, name, tags, id }) => {
       className="relative cursor-pointer my-2 group rounded-sm overflow-hidden shadow-md hover:shadow-lg border h-[400px]"
       // style={{ height: `${getRandomHeight()}px` }}
       onClick={handleClick}
+      onContextMenu={handleContextMenu}
     >
       <div
         className="absolute inset-0"

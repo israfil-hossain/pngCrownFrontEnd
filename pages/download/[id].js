@@ -31,7 +31,9 @@ const DownloadPhotos = () => {
     setVerified(true);
   }
   const [isRobot, setIsRobot] = useState(true);
-
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+  };
   function onChange(value) {
     // If the user is verified, enable the download button
     if (value) {
@@ -126,7 +128,7 @@ const DownloadPhotos = () => {
       {ispLoading ? (
         <ProgressBar />
       ) : (
-        <div className="px-8">
+        <div className="px-8" onContextMenu={handleContextMenu}>
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <div
