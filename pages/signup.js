@@ -26,12 +26,12 @@ const Signin = () => {
   };
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     setIsLoading(true);
-    console.log("object : >> ", values);
-    console.log("Submitted");
+    // console.log("object : >> ", values);
+    // console.log("Submitted");
     UserService.addUser(values)
       .then((response) => {
         setIsLoading(false);
-        console.log(response);
+        // console.log(response);
 
         toast.success("Successfully Signup !");
         setSubmitting(false);

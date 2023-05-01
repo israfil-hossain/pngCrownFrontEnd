@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuth(false);
     }
   };
-  console.log("Current user ", currentUser);
+  // console.log("Current user ", currentUser);
   const signin = (values) => {
     return API.post("/login", values);
   };

@@ -8,7 +8,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 // ];
 // The number of columns change by resizing the window
 const ImageGalary = ({images}) => {
-    console.log("Image Data is : ",images);
+    // console.log("Image Data is : ",images);
   return (
     <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
       <Masonry>

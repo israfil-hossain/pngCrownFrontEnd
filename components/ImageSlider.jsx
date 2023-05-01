@@ -23,7 +23,7 @@ const ImageSlider = () => {
 
   const fetchData = async () => {
     const res = await API.get("/slider");
-    console.log("Image Data ==>", res.data);
+    // console.log("Image Data ==>", res.data);
     setData(res.data);
   };
 
@@ -76,10 +76,10 @@ const ImageSlider = () => {
   // }
 
   return (
-    <div className="h-3/5 px-2 mb-10 overflow-hidden opactiy-200 bg-gray-400 bg-opacity-95 ">
+    <div className="h-3/5 px-2 mb-10 overflow-hidden opactiy-200 bg-gray-600 bg-opacity-400 ">
       <Slider {...settings}>
         {data?.map((item) => (
-          <div key={item?._id} className="h-96 w-full">
+          <div key={item?._id} className="lg:h-96 sm:h-full w-full">
             {item?.link ? (
               <Link href={item?.link}>
                 <div>
@@ -106,6 +106,7 @@ const ImageSlider = () => {
           </div>
         ))}
       </Slider>
+      {/* For Web */}
       <div className="absolute top-60 hidden lg:flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
         <div className="text-gray-50 text-3xl  font-[800] sm:px-5 flex font-sans">
           High-quality PNG images are available for free
@@ -115,6 +116,7 @@ const ImageSlider = () => {
           by our talented community
         </div>
       </div>
+      {/* For Mobile  */}
       <div className="absolute top-32 lg:hidden overflow-hidden flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
         <div className="text-gray-50 text-md  font-[900] px-5 flex font-sans">
           High-quality PNG images are available for free
@@ -129,6 +131,7 @@ const ImageSlider = () => {
       ) : (
         <>
           <div className="absolute top-80 mt-8 overflow-hidden lg:flex hidden w-full flex-col items-center text-center justify-center mx-auto">
+            {/* For Desktop */}
             <div className="relative rounded-md shadow-sm w-1/2">
               <form onSubmit={handleSearch}>
                 <input
@@ -147,7 +150,8 @@ const ImageSlider = () => {
               </form>
             </div>
           </div>
-          <div className="absolute  top-56 overflow-hidden  lg:hidden flex w-[100%]  items-center text-center justify-center ">
+          {/* For Mobile  */}
+          <div className="absolute  top-72 overflow-hidden  lg:hidden flex w-[100%]  items-center text-center justify-center ">
             <div className="relative rounded-md shadow-sm ">
               <form onSubmit={handleSearch}>
                 <input

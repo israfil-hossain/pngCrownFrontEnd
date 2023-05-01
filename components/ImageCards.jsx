@@ -13,7 +13,7 @@ const ImageCards = ({ image, name, tags, id }) => {
     event.preventDefault();
   };
   
-  console.log("Tags", tags);
+  // console.log("Tags", tags);
   const getRandomHeight = () => {
     const minHeight = 250; // minimum height in pixels
     const maxHeight = 400; // maximum height in pixels

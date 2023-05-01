@@ -12,6 +12,7 @@ import { useQuery } from "react-query";
 import ReCAPTCHA from "react-google-recaptcha";
 import Modal from "@/components/common/CommonModal";
 import { AuthContext } from "../../context/AuthContext";
+import Recaptcha from "@/components/common/Recaptcha";
 
 const DownloadPhotos = () => {
   const { isAuth } = useContext(AuthContext);
@@ -23,13 +24,13 @@ const DownloadPhotos = () => {
   const [ispLoading, setIspLoading] = useState(false);
   const MAX_DOWNLOADS = 10;
   const [showSignInModal, setShowSignInModal] = useState(false);
-  const [verified, setVerified] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
 
-  // recaptcha
-  function onChange(value) {
-    console.log("Captcha value:", value);
-    setVerified(true);
-  }
+  const handleVerify = (token) => {
+    setIsVerified(true);
+    // You can send the token to your server to verify it
+  };
+
   const [isRobot, setIsRobot] = useState(true);
   const handleContextMenu = (event) => {
     event.preventDefault();
@@ -54,7 +55,7 @@ const DownloadPhotos = () => {
     setIspLoading(true);
     try {
       const res = await API.get(`/image/${id}`);
-      console.log("Image Data ==>", res.data);
+      // console.log("Image Data ==>", res.data);
       setSingleData(res.data);
       setTags(res.data?.tags);
       setIspLoading(false);
@@ -121,7 +122,7 @@ const DownloadPhotos = () => {
     return item.category === singleData?.category;
   });
 
-  console.log("Filtered data: ", filteredData);
+  // console.log("Filtered data: ", filteredData);
 
   return (
     <>
@@ -131,19 +132,33 @@ const DownloadPhotos = () => {
         <div className="px-8" onContextMenu={handleContextMenu}>
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
-            <div
+            <Recaptcha onVerify={handleVerify} />
+            {/* <div
               className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
+              style={{ opacity: isVerified ? 1 : 0.5 }}
+              onClick={() =>
+                downloadImage(singleData?.imageName, singleData?.imageUrl)
+              }
+             
+            >
+              <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
+              {"Free Download"}
+            </div> */}
+            <button
+              className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!isVerified}
               onClick={() =>
                 downloadImage(singleData?.imageName, singleData?.imageUrl)
               }
             >
               <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
               {"Free Download"}
-            </div>
-            <ReCAPTCHA
-              sitekey="6LfdjsYlAAAAAJcz_ZDZbJdRVJD1luiGDzOCskcZ"
+            </button>
+
+            {/* <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
               onChange={onChange}
-            />
+            /> */}
           </div>
           <div className="relative pt-2 w-full flex justify-center  lg:hidden">
             <div
@@ -190,7 +205,11 @@ const DownloadPhotos = () => {
           <div className=" lg:flex-row justify-between hidden lg:flex">
             {/* Add Section  */}
             <div className="mt-8 w-96">
-              <AddSection width={"300px"} height={"300px"} slot={"3900635183"} />
+              <AddSection
+                width={"300px"}
+                height={"300px"}
+                slot={"3900635183"}
+              />
             </div>
             {/* Image Section  */}
             <div className="mt-8 flex flex-col w-1/2 px-8">
@@ -241,23 +260,26 @@ const DownloadPhotos = () => {
             <div className=" flex-col w-96 hidden lg:flex">
               <hr />
               <div className="mt-8 mb-5">
-                <AddSection height={"200px"} width={"300px"} slot={"5366556254"}/>
+                <AddSection
+                  height={"200px"}
+                  width={"300px"}
+                  slot={"5366556254"}
+                />
               </div>
               <hr className="mb-5 " />
               <div className="flex flex-col justify-center items-center ">
-                <ReCAPTCHA
-                  sitekey="6LfdjsYlAAAAAJcz_ZDZbJdRVJD1luiGDzOCskcZ"
-                  onChange={onChange}
-                />
-                <div
-                  className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
+                <Recaptcha onVerify={handleVerify} />
+
+                <button
+                  className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!isVerified}
                   onClick={() =>
                     downloadImage(singleData?.imageName, singleData?.imageUrl)
                   }
                 >
                   <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
                   {"Free Download"}
-                </div>
+                </button>
               </div>
               <div className="bg-gray-50 rounded-md border w-96 h-40 mt-5 ">
                 <div className="bg-gray-200 border-l-4 pl-2 border-l-indigo-500 ">
@@ -320,9 +342,13 @@ const DownloadPhotos = () => {
               <span>{singleData?.format}</span>
             </div>
           </div>
-          <div className=" py-2">
-            <AddSection height={"200px"} width={"500px"} slot={"9661024485"}/>
+          <div className="hidden lg:flex py-2 mx-auto justify-center items-center">
+            <AddSection width={"1200px"} height={"200px"} slot={"9661024485"} />
           </div>
+          <div className="lg:hidden  py-2">
+            <AddSection width={"250px"} height={"200px"} slot={"1779143964"} />
+          </div>
+
           <Modal isOpen={showSignInModal} onClose={handleCancel}>
             <div className="text-center">
               <p className="mb-2 py-5">

@@ -10,7 +10,7 @@ import ImageCardList from "@/components/common/ImageCardList";
 const Search = () => {
   const router = useRouter();
   const { searchQuery } = router.query;
-  console.log("Search Query ", searchQuery);
+  // console.log("Search Query ", searchQuery);
   const { data, isLoading, isError } = useQuery(
     "images",
     async () => {
@@ -31,9 +31,9 @@ const Search = () => {
       )
   );
 
-  console.log("FilterData : ", filteredData);
+  // console.log("FilterData : ", filteredData);
 
-  console.log("Response FilteredData is Search Data is :", filteredData);
+  // console.log("Response FilteredData is Search Data is :", filteredData);
 
   if (isLoading) {
     return <p>Loading...</p>;

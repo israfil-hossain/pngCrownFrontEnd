@@ -27,7 +27,7 @@ const SinglePhotos = () => {
 
   // recaptcha
   function onChange(value) {
-    console.log("Captcha value:", value);
+    // console.log("Captcha value:", value);
     setVerified(true);
   }
   useEffect(() => {
@@ -52,8 +52,8 @@ const SinglePhotos = () => {
       console.log(err);
     }
   };
-  console.log("Search Query ID ", id);
-  console.log("Tags data is :", tags);
+  // console.log("Search Query ID ", id);
+  // console.log("Tags data is :", tags);
 
   // console.log("Single Data is :", singleData);
   // const downloadImage = async (imageName, imageUrl) => {
@@ -114,7 +114,7 @@ const SinglePhotos = () => {
   console.log("Filtered data: ", filteredData);
 
   const handleClick = () => {
-    window.open(`/download/${id}`, '_blank');
+    window.open(`/download/${id}`, "_blank");
   };
 
   return (
@@ -132,7 +132,6 @@ const SinglePhotos = () => {
               <FiDownload className="mt-1 font-bold text-xl mx-2 text-white" />{" "}
               {"Click Here To Download"}
             </div>
-            
           </div>
           <div className="relative pt-2 w-full flex justify-center  lg:hidden">
             <div
@@ -179,7 +178,11 @@ const SinglePhotos = () => {
           <div className=" lg:flex-row justify-between hidden lg:flex">
             {/* Add Section  */}
             <div className="mt-8 w-96">
-              <AddSection width={"300px"} height={"300px"} slot={"3900635183"} />
+              <AddSection
+                width={"300px"}
+                height={"300px"}
+                slot={"3900635183"}
+              />
             </div>
             {/* Image Section  */}
             <div className="mt-8 flex flex-col w-1/2 px-8">
@@ -230,16 +233,20 @@ const SinglePhotos = () => {
             <div className=" flex-col w-96 hidden lg:flex">
               <hr />
               <div className="mt-8 mb-5">
-                <AddSection height={"200px"} width={"300px"} slot={"5366556254"}/>
+                <AddSection
+                  height={"200px"}
+                  width={"300px"}
+                  slot={"5366556254"}
+                />
               </div>
               <hr className="mb-5 " />
               <div className="flex flex-col justify-center items-center ">
-                
                 <div
                   className="w-92  cursor-pointer justify-between rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
                   onClick={handleClick}
                 >
-                  <FiDownload className="mt-1 font-bold text-xl mx-2 text-white" />{"   "}
+                  <FiDownload className="mt-1 font-bold text-xl mx-2 text-white" />
+                  {"   "}
                   {"Click Here To Download"}
                 </div>
               </div>
@@ -304,9 +311,13 @@ const SinglePhotos = () => {
               <span>{singleData?.format}</span>
             </div>
           </div>
-          <div className=" py-2">
-            <AddSection height={"200px"} width={"500px"} slot={"9661024485"}/>
+          <div className="hidden lg:flex py-2 mx-auto justify-center items-center">
+            <AddSection width={"1200px"} height={"200px"} slot={"9661024485"} />
           </div>
+          <div className="lg:hidden  py-2 w-full">
+            <AddSection width={"250px"} height={"200px"} slot={"1779143964"} />
+          </div>
+
           <div className=" text-center text-xl font-sans font-semibold mt-6">
             Related Png Images
           </div>

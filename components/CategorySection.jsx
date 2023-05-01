@@ -37,7 +37,7 @@ const Categories = () => {
       cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
     }
   );
-  console.log("Category",data);
+  // console.log("Category",data);
 
   const handleSearch = (cat_name)=>{
     router.push(

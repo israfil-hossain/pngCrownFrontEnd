@@ -28,7 +28,7 @@ export default function Home() {
       cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
     }
   );
-  console.log("Image data is ", data);
+  // console.log("Image data is ", data);
   return (
     <>
       
@@ -54,10 +54,7 @@ export default function Home() {
             <ImageCardList images={data} />
             
           </div>
-          {/* <div className="flex-col w-[200px] px-1 bg-gray-50">
-             <div className="grid gap-4 lg:grid-cols-4 xl:grid-cols-4 container lg:flex hidden"> 
-            <AddSection height={"400px"} width={"200px"} />
-          </div> */}
+          
         </div>
         {/* <div className="mb-8   lg:hidden ">
           <MobileAdSection />
