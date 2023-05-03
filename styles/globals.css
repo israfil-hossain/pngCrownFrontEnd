@@ -9,6 +9,9 @@ body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,Poppins;
   background-color: rgb(255, 255, 255);
+  overflow-x: hidden;
+  
+  
 }
 
 /* Set global link styles */

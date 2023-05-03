@@ -1,9 +1,10 @@
+import Image from "next/image";
 import React from "react";
 
 const ProgressBar = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-    <div className="relative">
+    {/* <div className="relative">
       <div className="border-4 border-gray-200 dark:border-gray-700 w-16 h-16 rounded-full"></div>
       <div className="border-4 border-blue-500 w-16 h-16 rounded-full animate-spin"></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -12,7 +13,8 @@ const ProgressBar = () => {
           <path d="M8 14L12 20L16 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-    </div>
+    </div> */}
+    <Image src={"/loader.gif"} alt="loader" width={300} height={300}/>
   </div>
   );
 };

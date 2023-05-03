@@ -133,20 +133,10 @@ const DownloadPhotos = () => {
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <Recaptcha onVerify={handleVerify} />
-            {/* <div
-              className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
-              style={{ opacity: isVerified ? 1 : 0.5 }}
-              onClick={() =>
-                downloadImage(singleData?.imageName, singleData?.imageUrl)
-              }
-             
-            >
-              <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
-              {"Free Download"}
-            </div> */}
+           
             <button
               className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={!isVerified}
+              disabled={isVerified ? false : true}
               onClick={() =>
                 downloadImage(singleData?.imageName, singleData?.imageUrl)
               }
@@ -155,10 +145,7 @@ const DownloadPhotos = () => {
               {"Free Download"}
             </button>
 
-            {/* <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-              onChange={onChange}
-            /> */}
+           
           </div>
           <div className="relative pt-2 w-full flex justify-center  lg:hidden">
             <div
@@ -272,7 +259,7 @@ const DownloadPhotos = () => {
 
                 <button
                   className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={!isVerified}
+                  disabled={isVerified ? false : true}
                   onClick={() =>
                     downloadImage(singleData?.imageName, singleData?.imageUrl)
                   }
@@ -300,7 +287,7 @@ const DownloadPhotos = () => {
                     <AiOutlineFile className="mt-1" />
                     <span>FileSize</span>
                   </div>
-                  <span>{"0 - 1 Mb "}</span>
+                  <span>{singleData?.size ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB" : "N/A"} </span>
                 </div>
                 <div className="flex flex-row justify-between px-4 mt-2">
                   <div className="flex space-x-2">
@@ -332,7 +319,7 @@ const DownloadPhotos = () => {
                 <AiOutlineFile className="mt-1" />
                 <span>FileSize</span>
               </div>
-              <span>{"0 - 1 Mb "}</span>
+              <span>{singleData?.size ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB" : "N/A"} </span>
             </div>
             <div className="flex flex-row justify-between px-4 mt-2">
               <div className="flex space-x-2">

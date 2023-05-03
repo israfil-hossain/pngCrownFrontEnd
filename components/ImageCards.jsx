@@ -21,8 +21,8 @@ const ImageCards = ({ image, name, tags, id }) => {
   };
   return (
     <div
-      className="relative cursor-pointer my-2 group rounded-sm overflow-hidden shadow-md hover:shadow-lg border h-[400px]"
-      // style={{ height: `${getRandomHeight()}px` }}
+      className="relative cursor-pointer my-2 group rounded-sm  shadow-md hover:shadow-lg border h-[450px] object-cover"
+      style={{ height: `${getRandomHeight()}px` }}
       onClick={handleClick}
       onContextMenu={handleContextMenu}
     >
@@ -30,11 +30,11 @@ const ImageCards = ({ image, name, tags, id }) => {
         className="absolute inset-0"
         style={{
           backgroundImage: `url('/backgroundImage.jpg')`,
-          backgroundSize: "cover",
+          backgroundSize: "contain",
           backgroundPosition: "center",
         }}
       ></div>
-      <div className="relative  top-0 left-0 bg-gray-300 bg-opacity-16 p-4 w-full h-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div className="relative  top-0 left-0 bg-gray-300 bg-opacity-16 p-4 w-full  opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <p className="text-gray-900 font-medium">{name}</p>
       </div>
       <Image
@@ -42,7 +42,9 @@ const ImageCards = ({ image, name, tags, id }) => {
         alt="Card Image"
         width={1000}
         height={500}
-        className="transition-opacity absolute justify-center items-center flex object-contain duration-300 group-hover:opacity-85 "
+        className="transition-opacity absolute justify-center items-center flex object-cover duration-300 group-hover:opacity-85 "
+        loading="lazy"
+        objectFit="contain"
       />
 
       <div className="absolute bottom-0 left-0 bg-gray-300 bg-opacity-16 p-4 w-full h-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">

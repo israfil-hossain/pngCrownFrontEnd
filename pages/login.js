@@ -14,7 +14,7 @@ import { Progress } from "@/components/common/Progress";
 import Link from "next/link";
 
 const Signin = () => {
-    const{signin,setCurrentUser } = useContext(AuthContext);
+    const{signin } = useContext(AuthContext);
     
   const router = useRouter();
   const initialValues = {
@@ -37,8 +37,9 @@ const Signin = () => {
 
         localStorage.setItem("token", `${response?.data.token}`);
         localStorage.setItem("role", `${response?.data.role}`);
+        localStorage.setItem("username", `${response?.data.username}`);
         localStorage.setItem("email", `${response?.data.email}`);
-        setCurrentUser({ email: response?.data.email,username: response?.data.username }); 
+         
         // const user = response.data.username;
         // dispatch({ type: "LOGIN", payload: user});
         toast.success("Login Successfully !");

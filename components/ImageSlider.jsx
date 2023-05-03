@@ -67,19 +67,13 @@ const ImageSlider = () => {
     autoplaySpeed: 4000,
   };
 
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
-
-  // if (isError) {
-  //   return <p>Error fetching images</p>;
-  // }
 
   return (
-    <div className="h-3/5 px-2 mb-10 overflow-hidden opactiy-200 bg-gray-600 bg-opacity-400 ">
-      <Slider {...settings}>
+   <>
+    <div className="  lg:h-[500px] md:h-3/5 sm:h-3/5 px-2 mb-10  opactiy-400 bg-gray-600 bg-opacity-600 w-full">
+    <Slider {...settings}>
         {data?.map((item) => (
-          <div key={item?._id} className="lg:h-96 sm:h-full w-full">
+          <div key={item?._id} className="lg:h-[494px] sm:h-full">
             {item?.link ? (
               <Link href={item?.link}>
                 <div>
@@ -89,6 +83,7 @@ const ImageSlider = () => {
                     width={1000}
                     height={500}
                     layout="responsive"
+                    className="w-full h-full "
                     priority
                   />
                 </div>
@@ -107,21 +102,21 @@ const ImageSlider = () => {
         ))}
       </Slider>
       {/* For Web */}
-      <div className="absolute top-60 hidden lg:flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
-        <div className="text-gray-50 text-3xl  font-[800] sm:px-5 flex font-sans">
+      <div className="absolute bottom-60 hidden  lg:flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
+        <div className="text-gray-50 text-3xl  font-[800] sm:px-5 flex font-sans ">
           High-quality PNG images are available for free
         </div>
-        <div className="text-white mt-2 sm:px-5 font-sans">
+        <div className="text-white mt-2 w-full sm:px-5 font-sans ">
           Over 2.7 million+ high quality stock images, videos and music shared
           by our talented community
         </div>
       </div>
       {/* For Mobile  */}
-      <div className="absolute top-32 lg:hidden overflow-hidden flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
+      <div className="absolute top-56 lg:hidden  flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
         <div className="text-gray-50 text-md  font-[900] px-5 flex font-sans">
           High-quality PNG images are available for free
         </div>
-        <div className="text-white mt-1 sm:px-5 font-sans">
+        <div className="text-white mt-1 w-full sm:px-5 font-sans">
           Over 2.7 million+ high quality stock images, videos and music shared
           by our talented community
         </div>
@@ -130,7 +125,7 @@ const ImageSlider = () => {
         ""
       ) : (
         <>
-          <div className="absolute top-80 mt-8 overflow-hidden lg:flex hidden w-full flex-col items-center text-center justify-center mx-auto">
+          <div className="absolute bottom-44 mt-8 lg:flex hidden w-full flex-col items-center text-center justify-center mx-auto">
             {/* For Desktop */}
             <div className="relative rounded-md shadow-sm w-1/2">
               <form onSubmit={handleSearch}>
@@ -151,7 +146,7 @@ const ImageSlider = () => {
             </div>
           </div>
           {/* For Mobile  */}
-          <div className="absolute  top-72 overflow-hidden  lg:hidden flex w-[100%]  items-center text-center justify-center ">
+          <div className="absolute  top-80  lg:hidden flex w-[98%]  items-center text-center justify-center ">
             <div className="relative rounded-md shadow-sm ">
               <form onSubmit={handleSearch}>
                 <input
@@ -172,7 +167,7 @@ const ImageSlider = () => {
           </div>
         </>
       )}
-    </div>
+    </div></>
   );
 };
 

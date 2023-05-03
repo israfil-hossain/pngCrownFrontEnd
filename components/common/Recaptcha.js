@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import { Progress } from "./Progress";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -30,8 +31,8 @@ const Recaptcha = ({ onVerify }) => {
       setTimeout(() => {
         setIsVerified(true);
         setIsLoading(false);
-      }, Math.floor(Math.random() * (6000 - 4000 + 1)) + 4000);
-  
+      },5000) ;
+      // Math.floor(Math.random() * (6000 - 4000 + 1)) + 4000)
       onVerify(token);
     } catch (error) {
       console.error(error);
@@ -68,12 +69,12 @@ const Recaptcha = ({ onVerify }) => {
               />
             </svg>
           ) : isLoading ? (
-            <div className="w-5 h-5 border-2 border-blue-500 rounded-full animate-spin"></div>
+            <Progress />
           ) : (
             <input
               type="checkbox"
               className="appearance-none h-5 w-5 border border-gray-400 rounded-sm checked:bg-blue-500 checked:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              disabled={isLoading}
+              disabled={isVerified ? true : false}
               onClick={handleVerify}
             />
           )}

@@ -6,21 +6,20 @@ import { useRouter } from "next/router";
 import { BiCameraOff } from "react-icons/bi";
 import AddSection from "@/components/AddSection";
 import ImageCardList from "@/components/common/ImageCardList";
+import ProgressBar from "@/components/common/ProgressBar";
 
 const Search = () => {
   const router = useRouter();
   const { searchQuery } = router.query;
   // console.log("Search Query ", searchQuery);
   const { data, isLoading, isError } = useQuery(
-    "images",
+    "image",
     async () => {
       const response = await API.get("/image");
       return response.data.filter((item) => item.status === "active"); // Filter data by status
     },
-    {
-      cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
-    }
   );
+  console.log("Data is : ",data);
 
   const filteredData = data?.filter(
     (image) =>
@@ -35,47 +34,49 @@ const Search = () => {
 
   // console.log("Response FilteredData is Search Data is :", filteredData);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
   if (isError) {
     return <p>Error fetching images</p>;
   }
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+  };
 
   return (
-   
-
-      <div className="mt-10 flex flex-col">
-        {filteredData.length > 0 ? (
-          <>
-          <div className="lg:flex hidden px-5">
-            {/* */}
-            <ImageCardList images={filteredData} />
-          </div>
-          <div className="lg:hidden flex-col flex px-5 absolute">
-          {filteredData?.map((item) => (
-              <ImageCards
-                image={item?.imageUrl}
-                key={item?._id}
-                name={item?.imageName}
-                tags={item?.tags}
-              />
-            ))} 
-
-          </div>
-          </>
-        ) : (
-          <div className="flex justify-center items-center h-screen">
-            <div className="border rounded-md px-16 py-12">
-              <BiCameraOff className="w-40 h-16 text-red-400" />
-              <span className="text-center items-center justify-center">
-                No Image found ...
-              </span>
+    <div className="mt-10 flex flex-col" onClick={handleContextMenu}>
+      {isLoading ? (
+        <ProgressBar />
+      ) : (
+        <div>
+          {filteredData.length > 0 ? (
+            <>
+              <div className=" px-5">
+                {/* */}
+                <ImageCardList images={filteredData} />
+              </div>
+              {/* <div className="lg:hidden flex-col flex px-5 ">
+                {filteredData?.map((item) => (
+                  <ImageCards
+                    image={item?.imageUrl}
+                    key={item?._id}
+                    name={item?.imageName}
+                    tags={item?.tags}
+                  />
+                ))}
+              </div> */}
+            </>
+          ) : (
+            <div className="flex justify-center items-center h-screen">
+              <div className="border rounded-md px-16 py-12">
+                <BiCameraOff className="w-40 h-16 text-red-400" />
+                <span className="text-center items-center justify-center">
+                  No Image found ...
+                </span>
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -10,20 +10,20 @@ const Categories = () => {
     infinite: true,
     speed: 800,
     slidesToShow: 10,
-    slidesToScroll: 3,
+    slidesToScroll: 5,
     arrows: false,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 5000,
   };
   const settings2 = {
     dots: false,
     infinite: true,
     speed: 800,
     slidesToShow: 4,
-    slidesToScroll: 3,
+    slidesToScroll: 4,
     arrows: false,
     autoplay: true,
-    autoplaySpeed: 4000,
+    autoplaySpeed: 5000,
   };
   const router = useRouter();
 
@@ -33,9 +33,6 @@ const Categories = () => {
       const response = await API.get("/category");
       return response.data.filter((item) => item.cat_status === "active"); // Filter data by status
     },
-    {
-      cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
-    }
   );
   // console.log("Category",data);
 
@@ -68,7 +65,7 @@ const Categories = () => {
           >
             <div className="   border-gray-200 py-1 rounded-md items-center text-center "
             onClick={()=>handleSearch(item?.cat_name)}>
-              <h3 className="text-lg text-[#0D98C9] font-normal "><u>{item?.cat_name}</u></h3>
+              <h3 className="text-lg text-[#0D98C9] font-normal cursor-pointer hover:shadow-md"><u>{item?.cat_name}</u></h3>
             </div>
           </div>
         ))}

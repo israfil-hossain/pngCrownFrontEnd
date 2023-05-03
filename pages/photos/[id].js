@@ -12,6 +12,7 @@ import { useQuery } from "react-query";
 import ReCAPTCHA from "react-google-recaptcha";
 import Modal from "@/components/common/CommonModal";
 import { AuthContext } from "../../context/AuthContext";
+import ImageCardList from "@/components/common/ImageCardList";
 
 const SinglePhotos = () => {
   const { isAuth } = useContext(AuthContext);
@@ -103,18 +104,18 @@ const SinglePhotos = () => {
       const response = await API.get("/image");
       return response.data.filter((item) => item.status === "active"); // Filter data by status
     },
-    {
-      cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
-    }
   );
   const filteredData = data?.filter((item) => {
-    return item.category === singleData?.category;
+    return item?.category === singleData?.category;
   });
 
   console.log("Filtered data: ", filteredData);
 
   const handleClick = () => {
-    window.open(`/download/${id}`, "_blank");
+    window.open(`/download/${id}`,'_blank', 'noopener,noreferrer');
+  };
+  const handleContextMenu = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -122,7 +123,7 @@ const SinglePhotos = () => {
       {ispLoading ? (
         <ProgressBar />
       ) : (
-        <div className="px-8">
+        <div className="px-8"  onContextMenu={handleContextMenu}>
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <div
@@ -138,7 +139,7 @@ const SinglePhotos = () => {
               className="absolute inset-0"
               style={{
                 backgroundImage: `url('/backgroundImage.jpg')`,
-                backgroundSize: "cover",
+                backgroundSize: "contain",
                 backgroundPosition: "center",
               }}
             ></div>
@@ -192,7 +193,7 @@ const SinglePhotos = () => {
                     className="absolute inset-0"
                     style={{
                       backgroundImage: `url('/backgroundImage.jpg')`,
-                      backgroundSize: "cover",
+                      backgroundSize: "contain",
                       backgroundPosition: "center",
                     }}
                   ></div>
@@ -269,7 +270,7 @@ const SinglePhotos = () => {
                     <AiOutlineFile className="mt-1" />
                     <span>FileSize</span>
                   </div>
-                  <span>{"0 - 1 Mb "}</span>
+                  <span>{singleData?.size ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB" : "N/A"} </span>
                 </div>
                 <div className="flex flex-row justify-between px-4 mt-2">
                   <div className="flex space-x-2">
@@ -321,8 +322,9 @@ const SinglePhotos = () => {
           <div className=" text-center text-xl font-sans font-semibold mt-6">
             Related Png Images
           </div>
-          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4  mt-5">
-            {filteredData?.map((item) => (
+          {/* <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4  mt-5"> */}
+            <ImageCardList images={filteredData}/>
+            {/* {filteredData?.map((item) => (
               <ImageCards
                 image={item?.imageUrl}
                 key={item?._id}
@@ -330,28 +332,10 @@ const SinglePhotos = () => {
                 tags={item?.tags}
                 id={item?._id}
               />
-            ))}
-          </div>
+            ))} */}
+          {/* </div> */}
 
-          <Modal isOpen={showSignInModal} onClose={handleCancel}>
-            <div className="text-center">
-              <p className="mb-2 py-5">
-                Please sign in to continue downloading.
-              </p>
-              <button
-                onClick={handleSignIn}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mr-2"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={handleCancel}
-                className="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded"
-              >
-                Cancel
-              </button>
-            </div>
-          </Modal>
+          
         </div>
       )}
     </>

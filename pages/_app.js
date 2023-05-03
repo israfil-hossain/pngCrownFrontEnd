@@ -1,6 +1,6 @@
 import CommonLayout from "@/components/layouts/CommonLayout";
 import "../styles/globals.css";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider,Hydrate } from "react-query";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 const queryClient = new QueryClient();
@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/pngcrown.png" />
         <script
-          async
+          async={true}
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7562191749444029"
           crossorigin="anonymous"
         ></script>
@@ -34,6 +34,7 @@ export default function App({ Component, pageProps }) {
       <CssBaseline />
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
             <ToastContainer
               position="top-right"
               autoClose={1500}
@@ -43,6 +44,7 @@ export default function App({ Component, pageProps }) {
             <CommonLayout>
               <Component {...pageProps} />
             </CommonLayout>
+            </Hydrate>
           </QueryClientProvider>
         </AuthProvider>
       </ThemeProvider>

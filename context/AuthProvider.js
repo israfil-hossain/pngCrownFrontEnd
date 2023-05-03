@@ -16,8 +16,10 @@ export const AuthProvider = ({ children }) => {
   })
   const isAuthenticated = () => {
     const token = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
     if (token) {
       setIsAuth(true);
+      setCurrentUser(username);
     } else {
       setIsAuth(false);
     }
@@ -47,7 +49,6 @@ export const AuthProvider = ({ children }) => {
   const value = {
     isAuth,
     currentUser,
-    setCurrentUser,
     signin,
     logout,
     addUser,
