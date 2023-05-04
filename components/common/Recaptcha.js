@@ -21,26 +21,23 @@ const Recaptcha = ({ onVerify }) => {
 
   const handleVerify = async () => {
     setIsLoading(true);
-  
+
     try {
       const token = await window.grecaptcha.execute(SITE_KEY, {
         action: "verify",
       });
-  
+
       // Wait for 4-6 seconds before setting the verification status to true
       setTimeout(() => {
         setIsVerified(true);
         setIsLoading(false);
-      },5000) ;
+      }, 4000);
       // Math.floor(Math.random() * (6000 - 4000 + 1)) + 4000)
       onVerify(token);
     } catch (error) {
       console.error(error);
     }
-  
-    
   };
-  
 
   return (
     <>
@@ -50,8 +47,9 @@ const Recaptcha = ({ onVerify }) => {
           src={`https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`}
         ></script>
       </Head>
+      
       <div
-        className="relative mb-2 flex w-52 items-center justify-between gap-2 h-12 px-4 bg-white border border-gray-400 rounded-md text-sm text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="relative mb-2 flex w-72 py-2 items-center justify-between gap-2 h-[80px] px-4 bg-gray-50 border border-gray-400 rounded-md text-sm text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={isLoading}
       >
         <div className="items-center justify-center">
@@ -79,10 +77,14 @@ const Recaptcha = ({ onVerify }) => {
             />
           )}
         </div>
-        <p>{"I'm not a robot "}</p>
+        <p className="text-lg font-normal text-gray-700">{"I'm not a robot "}</p>
 
-        <div className="flex items-center justify-center rounded-full bg-white border border-gray-400 h-8 w-8">
-          <Image width={50} height={50} src="/google.svg" alt="" />
+        <div className="flex flex-col">
+          <div className="flex items-center justify-center r bg-white ml-5 mt-2  h-8 w-8">
+            <Image width={50} height={50} src="/google.svg" alt="" />
+          </div>
+          <span className="text-[13px] text-gray-600">reCAPTCHA</span>
+          <span className="text-[9px] text-gray-500">{"Privacy-Terms"}</span>
         </div>
       </div>
     </>

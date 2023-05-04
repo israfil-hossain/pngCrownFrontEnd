@@ -27,8 +27,9 @@ const DownloadPhotos = () => {
   const [isVerified, setIsVerified] = useState(false);
 
   const handleVerify = (token) => {
-    setIsVerified(true);
-    // You can send the token to your server to verify it
+    setTimeout(() => {
+      setIsVerified(true);
+    }, 4000);
   };
 
   const [isRobot, setIsRobot] = useState(true);

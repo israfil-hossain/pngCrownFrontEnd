@@ -70,7 +70,7 @@ const ImageCardList = ({ images }) => {
   const matchesMd = useMediaQuery("(max-width:960px)");
   const matchesSm = useMediaQuery("(max-width:600px)");
 
-  const cols = matchesSm ? 1 : matchesMd ? 2 : 4;
+  const cols = matchesSm ? 3 : matchesMd ? 4 : 7;
   return (
    
       <ImageList variant="masonry" cols={cols} gap={12} >
