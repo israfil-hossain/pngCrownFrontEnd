@@ -123,7 +123,6 @@ const DownloadPhotos = () => {
     return item.category === singleData?.category;
   });
 
-  // console.log("Filtered data: ", filteredData);
 
   return (
     <>
@@ -134,7 +133,7 @@ const DownloadPhotos = () => {
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <Recaptcha onVerify={handleVerify} />
-           
+
             <button
               className="w-56 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isVerified ? false : true}
@@ -145,8 +144,6 @@ const DownloadPhotos = () => {
               <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
               {"Free Download"}
             </button>
-
-           
           </div>
           <div className="relative pt-2 w-full flex justify-center  lg:hidden">
             <div
@@ -175,12 +172,12 @@ const DownloadPhotos = () => {
             <div className="h-6 border-l-4 border-l-indigo-500 font-sans pl-5 bg-gray-100 ">
               PNG tags
             </div>
-            <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5">
+            <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5 w-full">
               {singleData?.tags &&
                 singleData?.tags[0].split(",").map((tag) => (
                   <span
                     key={tag}
-                    className="text-small bg-slate-100 rounded-md mr-1 px-3 py-1 "
+                    className="text-small bg-slate-100 rounded-md mr-1 px-3 my-2 py-1 inline-block max-w-full break-words"
                   >
                     {tag}
                   </span>
@@ -230,12 +227,12 @@ const DownloadPhotos = () => {
                   <div className="h-6 border-l-4 border-l-indigo-500 font-sans pl-5 bg-gray-100 ">
                     PNG tags
                   </div>
-                  <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5">
+                  <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5 w-full">
                     {singleData?.tags &&
                       singleData?.tags[0].split(",").map((tag) => (
                         <span
                           key={tag}
-                          className="text-small bg-slate-100 rounded-md mr-1 px-3 py-1 "
+                          className="text-small bg-slate-100 rounded-md mr-1 px-3 my-2 py-1 inline-block max-w-full break-words"
                         >
                           {tag}
                         </span>
@@ -288,7 +285,11 @@ const DownloadPhotos = () => {
                     <AiOutlineFile className="mt-1" />
                     <span>FileSize</span>
                   </div>
-                  <span>{singleData?.size ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB" : "N/A"} </span>
+                  <span>
+                    {singleData?.size
+                      ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB"
+                      : "N/A"}{" "}
+                  </span>
                 </div>
                 <div className="flex flex-row justify-between px-4 mt-2">
                   <div className="flex space-x-2">
@@ -320,7 +321,11 @@ const DownloadPhotos = () => {
                 <AiOutlineFile className="mt-1" />
                 <span>FileSize</span>
               </div>
-              <span>{singleData?.size ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB" : "N/A"} </span>
+              <span>
+                {singleData?.size
+                  ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB"
+                  : "N/A"}{" "}
+              </span>
             </div>
             <div className="flex flex-row justify-between px-4 mt-2">
               <div className="flex space-x-2">

@@ -70,21 +70,20 @@ const ImageSlider = () => {
 
   return (
    <>
-    <div className="  lg:h-[500px] md:h-3/5 sm:h-3/5 px-2 mb-10  opactiy-400 bg-gray-600 bg-opacity-600 w-full">
+    <div className="  lg:h-[500px] xl:h-[600px] xs:h-[280px] sm:h-[300px] md:h-[350px] mb-10  opactiy-500 bg-gray-400 bg-opacity-600 w-full">
     <Slider {...settings}>
         {data?.map((item) => (
-          <div key={item?._id} className="lg:h-[494px] sm:h-full">
+          <div key={item?._id} className="lg:h-[500px] xl:h-[600px] xs:h-[280px] sm:h-[300px] md:h-[350px]">
             {item?.link ? (
-              <Link href={item?.link}>
-                <div>
+              <Link href={item?.link} target="_blank">
+                <div className="w-full h-full">
                   <Image
                     src={item?.imageUrl}
                     alt={"Image Slider"}
                     width={1000}
-                    height={500}
+                    height={1000}
                     layout="responsive"
                     className="w-full h-full "
-                    priority
                   />
                 </div>
               </Link>
@@ -102,32 +101,32 @@ const ImageSlider = () => {
         ))}
       </Slider>
       {/* For Web */}
-      <div className="absolute bottom-60 hidden  lg:flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
-        <div className="text-gray-50 text-3xl  font-[800] sm:px-5 flex font-sans ">
+      <div className="absolute lg:top-[400px] xl:top-[400px] xs:top-[180px] sm:top-[180px] md:top-[200px]   flex  w-full flex-col items-center text-center justify-center mx-auto mb-5">
+        <div className="text-gray-50 lg:text-2xl xl:text-3xl md:text-lg sm:text-md xs:text-sm  font-[800] px-3 flex font-sans ">
           High-quality PNG images are available for free
         </div>
-        <div className="text-white mt-2 w-full sm:px-5 font-sans ">
+        <div className="text-white mt-2 w-full lg:text-xl xl:text-xl md:text-sm sm:text-sm xs:text-xs px-3 font-sans ">
           Over 2.7 million+ high quality stock images, videos and music shared
           by our talented community
         </div>
       </div>
       {/* For Mobile  */}
-      <div className="absolute top-56 lg:hidden  flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
-        <div className="text-gray-50 text-md  font-[900] px-5 flex font-sans">
+      {/* <div className="absolute bottom-96 lg:hidden  flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
+        <div className="text-gray-50 text-[17px]  font-[900] px-5 flex font-sans">
           High-quality PNG images are available for free
         </div>
-        <div className="text-white mt-1 w-full sm:px-5 font-sans">
-          Over 2.7 million+ high quality stock images, videos and music shared
+        <div className="text-white text-[13px] mt-1 w-full sm:px-5 font-sans">
+          Over 2.7 million+ high quality stock images, <br/> videos and music shared
           by our talented community
         </div>
-      </div>
+      </div> */}
       {showSearch ? (
         ""
       ) : (
         <>
-          <div className="absolute bottom-44 mt-8 lg:flex hidden w-full flex-col items-center text-center justify-center mx-auto">
+          <div className="absolute lg:top-[460px] xl:top-[460px] xs:top-[250px] sm:top-[250px] md:top-[250px] mt-8 flex  w-full flex-col items-center text-center justify-center mx-auto">
             {/* For Desktop */}
-            <div className="relative rounded-md shadow-sm w-1/2">
+            <div className="relative rounded-md shadow-sm xl:w-1/2 lg:w-1/2 md:w-80 xs:w-80 sm:w-80 ">
               <form onSubmit={handleSearch}>
                 <input
                   type="text"
@@ -146,7 +145,7 @@ const ImageSlider = () => {
             </div>
           </div>
           {/* For Mobile  */}
-          <div className="absolute  top-80  lg:hidden flex w-[98%]  items-center text-center justify-center ">
+          {/* <div className="absolute  bottom-72  lg:hidden flex w-[98%]  items-center text-center justify-center ">
             <div className="relative rounded-md shadow-sm ">
               <form onSubmit={handleSearch}>
                 <input
@@ -164,10 +163,11 @@ const ImageSlider = () => {
                 </button>
               </form>
             </div>
-          </div>
+          </div> */}
         </>
       )}
-    </div></>
+    </div>
+  </>
   );
 };
 

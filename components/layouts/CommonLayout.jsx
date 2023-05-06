@@ -37,12 +37,12 @@ const CommonLayout = ({ children }) => {
       <div className="mb-10 ">{children}</div>
       <div style={{ position: "fixed", bottom: "10px", right: "10px" }}>
         <Link href="https://www.pinterest.es/png_crown/">
-          <div className=" animate-bounce rounded-full hover:shadow-lg hover:bg-indigo-100  bg-gray-50 px-4 py-4 mb-4 cursor-pointer">
+          <div className=" animate-bounce rounded-full hover:shadow-lg  px-4 py-4 mb-4 cursor-pointer">
             <BsPinterest className="text-red-500 w-10 h-10 sm:w-10 sm:h-10 md:w-10 md:h-10" />
           </div>
         </Link>
         <Link href="https://www.instagram.com/pngcrown/">
-          <div className="animate-bounce hover:shadow-lg hover:bg-indigo-100  rounded-full bg-gray-50 py-5 px-2 flex justify-center cursor-pointer">
+          <div className="animate-bounce hover:shadow-lg   rounded-full  py-5 px-2 flex justify-center cursor-pointer">
             {/* <BsInstagram className="text-white w-9 h-9" /> */}
             <Image src="/instagram.png" alt="" width={32} height={32} />
           </div>

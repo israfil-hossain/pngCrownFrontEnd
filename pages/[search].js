@@ -42,7 +42,7 @@ const Search = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col" onClick={handleContextMenu}>
+    <div className="mt-10 flex flex-col h-auto" onClick={handleContextMenu}>
       {isLoading ? (
         <ProgressBar />
       ) : (

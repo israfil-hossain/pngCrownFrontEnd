@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }) {
     <Head>
         <title>Pngcrown</title>
         <meta name="description" content="Free Png Image Download here" />
+        <meta name="p:domain_verify" content="b5758736f8f74390c0223f4aa7d7ac4f"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/pngcrown.png" />
         <script

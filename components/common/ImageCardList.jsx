@@ -24,16 +24,16 @@ const ImageCard = ({ image }) => {
   return (
    
     <motion.div
-      onContextMenu={handleContextMenu}
-      className=" border w-full rounded-md shadow-md transition-shadow duration-400 transform hover:shadow-xl hover:shadow-gray-500 hover:cursor-pointer"
-      whileHover={{ scale: 1.2 }}
-      transition={{ duration: 0.2 }}
-      onClick={handleClick}
+    onContextMenu={handleContextMenu}
+    className="border w-full rounded-md shadow-md transition-shadow duration-400 transform hover:bg-gray-400 hover:shadow-gray-500 hover:cursor-pointer"
+    whileHover={{ scale: 1.05, boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.3)" }}
+    transition={{ duration: 0.2 }}
+    onClick={handleClick}
     >
-      <div className="relative">
+      <div className="relative hover:bg-gray-200 hover:shadow-md">
        
         <div
-          className="fixed inset-0"
+          className="fixed inset-0 hover:shadow-md hover:bg-gray-300"
           style={{
             backgroundImage: `url('/backgroundImage.jpg')`,
             backgroundSize: "contain",
@@ -49,7 +49,7 @@ const ImageCard = ({ image }) => {
           width={200} 
           height={200}
         />
-        <div className="relative bg-white text-gray-800 font-sans  text-[13px] flex items-center justify-center py-2 px-2 mt-3">
+        <div className="relative bg-white hover:shadow-lg hover:shadow-gray-200  hover:bg-slate-50 text-gray-800 font-sans  text-[13px] flex items-center justify-center py-2 px-2 mt-3">
           {/* {image?.tags[0]?.split(",").map((tag) => (
             <span
               key={tag}

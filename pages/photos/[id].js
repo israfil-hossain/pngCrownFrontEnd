@@ -28,7 +28,6 @@ const SinglePhotos = () => {
 
   // recaptcha
   function onChange(value) {
-    // console.log("Captcha value:", value);
     setVerified(true);
   }
   useEffect(() => {
@@ -53,58 +52,11 @@ const SinglePhotos = () => {
       console.log(err);
     }
   };
-  // console.log("Search Query ID ", id);
-  // console.log("Tags data is :", tags);
-
-  // console.log("Single Data is :", singleData);
-  // const downloadImage = async (imageName, imageUrl) => {
-  //   const downloadCount = parseInt(
-  //     localStorage.getItem("downloadCount") || "0"
-  //   );
-  //   if (!isAuth && downloadCount >= MAX_DOWNLOADS) {
-  //     setShowSignInModal(true);
-  //     return;
-
-  //     // redirect the user to the login page if they're not logged in and have already downloaded 10 images
-  //   }
-  //   fetch(imageUrl)
-  //     .then((response) => response.blob())
-  //     .then((blob) => {
-  //       // Create a temporary <a> tag with download attribute
-  //       const link = document.createElement("a");
-  //       link.href = URL.createObjectURL(blob);
-  //       link.download = `${imageName}.png`;
-
-  //       // Programmatically click the <a> tag to start the download
-  //       link.click();
-
-  //       // Revoke the URL to free up memory
-  //       URL.revokeObjectURL(link.href);
-
-  //       // increment the download count and store it in localStorage
-  //       localStorage.setItem("downloadCount", downloadCount + 1);
-
-  //       // Call the image download API using Axios
-  //       API.get(`/image/download/${imageName}`)
-  //         .then((response) => {
-  //           console.log("Image download tracked successfully");
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error tracking image download:", error);
-  //         });
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error downloading image:", error);
-  //     });
-  // };
-
-  const { data, isLoading, isError } = useQuery(
-    "images",
-    async () => {
-      const response = await API.get("/image");
-      return response.data.filter((item) => item.status === "active"); // Filter data by status
-    },
-  );
+ 
+  const { data, isLoading, isError } = useQuery("images", async () => {
+    const response = await API.get("/image");
+    return response.data.filter((item) => item.status === "active"); // Filter data by status
+  });
   const filteredData = data?.filter((item) => {
     return item?.category === singleData?.category;
   });
@@ -112,7 +64,7 @@ const SinglePhotos = () => {
   console.log("Filtered data: ", filteredData);
 
   const handleClick = () => {
-    window.open(`/download/${id}`,'_blank', 'noopener,noreferrer');
+    window.open(`/download/${id}`, "_blank", "noopener,noreferrer");
   };
   const handleContextMenu = (event) => {
     event.preventDefault();
@@ -123,14 +75,14 @@ const SinglePhotos = () => {
       {ispLoading ? (
         <ProgressBar />
       ) : (
-        <div className="px-8"  onContextMenu={handleContextMenu}>
+        <div className="px-8" onContextMenu={handleContextMenu}>
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <div
-              className="w-88 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-5 flex flex-row font-semibold text-xl text-white"
+              className="w-88 cursor-pointer justify-around rounded-full bg-green-500 py-2 px-3 flex flex-row font-semibold  text-white"
               onClick={handleClick}
             >
-              <FiDownload className="mt-1 font-bold text-xl mx-2 text-white" />{" "}
+              <FiDownload className="mt-1 lg:font-bold sm:font-medium lg:text-xl  sm:text-sm mx-2 text-white" />{" "}
               {"Click Here To Download"}
             </div>
           </div>
@@ -161,12 +113,12 @@ const SinglePhotos = () => {
             <div className="h-6 border-l-4 border-l-indigo-500 font-sans pl-5 bg-gray-100 ">
               PNG tags
             </div>
-            <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5">
+            <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5 w-full">
               {singleData?.tags &&
                 singleData?.tags[0].split(",").map((tag) => (
                   <span
                     key={tag}
-                    className="text-small bg-slate-100 rounded-md mr-1 px-3 py-1 "
+                    className="text-small bg-slate-100 rounded-md mr-1 px-3 my-2 py-1 inline-block max-w-full break-words"
                   >
                     {tag}
                   </span>
@@ -216,12 +168,12 @@ const SinglePhotos = () => {
                   <div className="h-6 border-l-4 border-l-indigo-500 font-sans pl-5 bg-gray-100 ">
                     PNG tags
                   </div>
-                  <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5">
+                  <div className="bg-white shadow-md text-center text-gray-900 font-sans py-5 w-full">
                     {singleData?.tags &&
                       singleData?.tags[0].split(",").map((tag) => (
                         <span
                           key={tag}
-                          className="text-small bg-slate-100 rounded-md mr-1 px-3 py-1 "
+                          className="text-small bg-slate-100 rounded-md mr-1 px-3 my-2 py-1 inline-block max-w-full break-words"
                         >
                           {tag}
                         </span>
@@ -270,7 +222,11 @@ const SinglePhotos = () => {
                     <AiOutlineFile className="mt-1" />
                     <span>FileSize</span>
                   </div>
-                  <span>{singleData?.size ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB" : "N/A"} </span>
+                  <span>
+                    {singleData?.size
+                      ? (singleData.size / (1024 * 1024)).toFixed(2) + " MB"
+                      : "N/A"}{" "}
+                  </span>
                 </div>
                 <div className="flex flex-row justify-between px-4 mt-2">
                   <div className="flex space-x-2">
@@ -323,19 +279,7 @@ const SinglePhotos = () => {
             Related Png Images
           </div>
           {/* <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4  mt-5"> */}
-            <ImageCardList images={filteredData}/>
-            {/* {filteredData?.map((item) => (
-              <ImageCards
-                image={item?.imageUrl}
-                key={item?._id}
-                name={item?.imageName}
-                tags={item?.tags}
-                id={item?._id}
-              />
-            ))} */}
-          {/* </div> */}
-
-          
+          <ImageCardList images={filteredData} />
         </div>
       )}
     </>
