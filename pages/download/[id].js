@@ -1,5 +1,4 @@
-import ImageCards from "@/components/ImageCards";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { useRouter } from "next/router";
 import { API } from "@/config/axiosConfig";
 import Image from "next/image";
@@ -8,23 +7,51 @@ import AddSection from "@/components/AddSection";
 import { FiDownload } from "react-icons/fi";
 import { TbDimensions } from "react-icons/tb";
 import { AiOutlineFile, AiOutlineFileImage } from "react-icons/ai";
-import { useQuery } from "react-query";
-import ReCAPTCHA from "react-google-recaptcha";
 import Modal from "@/components/common/CommonModal";
 import { AuthContext } from "../../context/AuthContext";
 import Recaptcha from "@/components/common/Recaptcha";
+import axios from "axios";
+import { s3 } from "@/config/aws-config";
+import getConfig from "next/config";
+import { Progress } from "@/components/common/Progress";
+
+const useFetchData = () => {
+  const [singleData, setSingleData] = useState();
+  const [ispLoading, setIspLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchData = useCallback(async (id) => {
+    setIspLoading(true);
+    try {
+      const res = await API.get(`/image/${id}`);
+      setSingleData(res.data);
+      setError(null);
+    } catch (err) {
+      console.log(err);
+      setError("Failed to fetch data");
+    } finally {
+      setIspLoading(false);
+    }
+  }, []);
+
+  return { singleData, ispLoading, error, fetchData };
+};
 
 const DownloadPhotos = () => {
   const { isAuth } = useContext(AuthContext);
 
   const router = useRouter();
   const { id } = router.query;
-  const [singleData, setSingleData] = useState();
+  const { singleData, ispLoading, error, fetchData } = useFetchData();
+
   const [tags, setTags] = useState();
-  const [ispLoading, setIspLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const MAX_DOWNLOADS = 10;
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+
+  const { publicRuntimeConfig } = getConfig();
+  const { AWS_BUCKET_NAME } = publicRuntimeConfig;
 
   const handleVerify = (token) => {
     setTimeout(() => {
@@ -42,32 +69,22 @@ const DownloadPhotos = () => {
       setIsRobot(false);
     }
   }
+
   useEffect(() => {
-    fetchData(id);
-  }, [id]);
+    if (id) {
+      fetchData(id);
+    }
+  }, [id, fetchData]);
+
   const handleSignIn = () => {
     // Redirect the user to the login page
-    window.location.href = "/login";
+    // window.location.href = "/login";
+    router.push("/login");
   };
   const handleCancel = () => {
     setShowSignInModal(false);
   };
-  const fetchData = async (id) => {
-    setIspLoading(true);
-    try {
-      const res = await API.get(`/image/${id}`);
-      // console.log("Image Data ==>", res.data);
-      setSingleData(res.data);
-      setTags(res.data?.tags);
-      setIspLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  console.log("Search Query ID ", id);
-  console.log("Tags data is :", tags);
 
-  // console.log("Single Data is :", singleData);
   const downloadImage = async (imageName, imageUrl) => {
     const downloadCount = parseInt(
       localStorage.getItem("downloadCount") || "0"
@@ -75,61 +92,53 @@ const DownloadPhotos = () => {
     if (!isAuth && downloadCount >= MAX_DOWNLOADS) {
       setShowSignInModal(true);
       return;
-
-      // redirect the user to the login page if they're not logged in and have already downloaded 10 images
     }
-    fetch(imageUrl)
-      .then((response) => response.blob())
-      .then((blob) => {
-        // Create a temporary <a> tag with download attribute
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `${imageName}.png`;
+    setIsLoading(true);
 
-        // Programmatically click the <a> tag to start the download
-        link.click();
+    try {
+      // Extract the S3 object key from the image URL
+      const urlParts = imageUrl.split("/");
+      const key = urlParts[urlParts.length - 1];
 
-        // Revoke the URL to free up memory
-        URL.revokeObjectURL(link.href);
+      // Download the image from S3
+      const response = await s3
+        .getObject({
+          Bucket: AWS_BUCKET_NAME,
+          Key: key,
+        })
+        .promise();
 
-        // increment the download count and store it in localStorage
-        localStorage.setItem("downloadCount", downloadCount + 1);
+      // Create a temporary <a> tag with download attribute
+      const url = URL.createObjectURL(new Blob([response.Body]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${imageName}.png`;
 
-        // Call the image download API using Axios
-        API.get(`/image/download/${imageName}`)
-          .then((response) => {
-            console.log("Image download tracked successfully");
-          })
-          .catch((error) => {
-            console.error("Error tracking image download:", error);
-          });
-      })
-      .catch((error) => {
-        console.error("Error downloading image:", error);
-      });
+      // Programmatically click the <a> tag to start the download
+      link.click();
+
+      // Revoke the URL to free up memory
+      URL.revokeObjectURL(url);
+
+      // Increment the download count and store it in localStorage
+      localStorage.setItem("downloadCount", downloadCount + 1);
+
+      // Call the image download API using Axios
+      const downloadResponse = await axios.get(`/image/download/${imageName}`);
+      console.log("Image download tracked successfully");
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      setIsLoading(false);
+    }
   };
-
-  const { data, isLoading, isError } = useQuery(
-    "images",
-    async () => {
-      const response = await API.get("/image");
-      return response.data.filter((item) => item.status === "active"); // Filter data by status
-    },
-    {
-      cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
-    }
-  );
-  const filteredData = data?.filter((item) => {
-    return item.category === singleData?.category;
-  });
-
 
   return (
     <>
       {ispLoading ? (
         <ProgressBar />
       ) : (
-        <div className="px-8" onContextMenu={handleContextMenu}>
+        <div className="px-8 min-h-screen" onContextMenu={handleContextMenu}>
           {/* For Mobile Devices  */}
           <div className="flex flex-col my-5 justify-center items-center  lg:hidden">
             <Recaptcha onVerify={handleVerify} />
@@ -141,7 +150,11 @@ const DownloadPhotos = () => {
                 downloadImage(singleData?.imageName, singleData?.imageUrl)
               }
             >
-              <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
+              {isLoading ? (
+                <Progress />
+              ) : (
+                <FiDownload className="mt-1 font-bold text-xl text-white" />
+              )}{" "}
               {"Free Download"}
             </button>
           </div>
@@ -154,15 +167,14 @@ const DownloadPhotos = () => {
                 backgroundPosition: "center",
               }}
             ></div>
-            {
-              <Image
-                src={singleData?.imageUrl}
-                alt=""
-                width={550}
-                height={300}
-                className="relative px-8"
-              />
-            }
+
+            <Image
+              src={singleData?.imageUrl}
+              alt=""
+              width={550}
+              height={300}
+              className="relative px-8"
+            />
           </div>
           <div className="bg-white border  lg:hidden">
             <div className="bg-white  text-center text-gray-900 font-sans ">
@@ -262,7 +274,11 @@ const DownloadPhotos = () => {
                     downloadImage(singleData?.imageName, singleData?.imageUrl)
                   }
                 >
-                  <FiDownload className="mt-1 font-bold text-xl text-white" />{" "}
+                  {isLoading ? (
+                    <Progress />
+                  ) : (
+                    <FiDownload className="mt-1 font-bold text-xl text-white" />
+                  )}{" "}
                   {"Free Download"}
                 </button>
               </div>
@@ -270,7 +286,7 @@ const DownloadPhotos = () => {
                 <div className="bg-gray-200 border-l-4 pl-2 border-l-indigo-500 ">
                   PNG info
                 </div>
-                <div className="flex flex-row justify-between px-4 mt-2">
+                {/* <div className="flex flex-row justify-between px-4 mt-2">
                   <div className="flex space-x-2">
                     <TbDimensions className="mt-1" />
                     <span>Dimensions</span>
@@ -279,7 +295,7 @@ const DownloadPhotos = () => {
                     {singleData?.height}x{singleData?.width}
                     {" px"}
                   </span>
-                </div>
+                </div> */}
                 <div className="flex flex-row justify-between px-4 mt-2">
                   <div className="flex space-x-2">
                     <AiOutlineFile className="mt-1" />
@@ -306,7 +322,7 @@ const DownloadPhotos = () => {
             <div className="bg-gray-200 border-l-4 pl-2 border-l-indigo-500 ">
               PNG info
             </div>
-            <div className="flex flex-row justify-between px-4 mt-2">
+            {/* <div className="flex flex-row justify-between px-4 mt-2">
               <div className="flex space-x-2">
                 <TbDimensions className="mt-1" />
                 <span>Dimensions</span>
@@ -315,7 +331,7 @@ const DownloadPhotos = () => {
                 {singleData?.height}x{singleData?.width}
                 {" px"}
               </span>
-            </div>
+            </div> */}
             <div className="flex flex-row justify-between px-4 mt-2">
               <div className="flex space-x-2">
                 <AiOutlineFile className="mt-1" />

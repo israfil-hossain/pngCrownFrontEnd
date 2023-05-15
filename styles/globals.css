@@ -4,12 +4,16 @@
 
 /* Set global font styles */
 html,
+#root{
+  min-height:100vh;
+}
 body {
   padding: 0;
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,Poppins;
   background-color: rgb(255, 255, 255);
   overflow-x: hidden;
+  min-height:100vh;
   
   
 }

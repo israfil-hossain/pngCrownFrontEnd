@@ -30,10 +30,6 @@ const Search = () => {
       )
   );
 
-  // console.log("FilterData : ", filteredData);
-
-  // console.log("Response FilteredData is Search Data is :", filteredData);
-
   if (isError) {
     return <p>Error fetching images</p>;
   }
@@ -42,7 +38,7 @@ const Search = () => {
   };
 
   return (
-    <div className="mt-10 flex flex-col h-auto" onClick={handleContextMenu}>
+    <div className="mt-10 flex flex-col h-auto min-h-screen" onClick={handleContextMenu}>
       {isLoading ? (
         <ProgressBar />
       ) : (
@@ -53,16 +49,6 @@ const Search = () => {
                 {/* */}
                 <ImageCardList images={filteredData} />
               </div>
-              {/* <div className="lg:hidden flex-col flex px-5 ">
-                {filteredData?.map((item) => (
-                  <ImageCards
-                    image={item?.imageUrl}
-                    key={item?._id}
-                    name={item?.imageName}
-                    tags={item?.tags}
-                  />
-                ))}
-              </div> */}
             </>
           ) : (
             <div className="flex justify-center items-center h-screen">

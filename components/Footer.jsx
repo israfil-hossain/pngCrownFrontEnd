@@ -1,10 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-import { BsPinterest } from "react-icons/bs";
-
 const Footer = () => {
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+  };
   return (
-    <footer className="bg-gray-800 overflow-hidden ">
+    <footer className="bg-gray-800 overflow-hidden " onContextMenu={handleContextMenu}>
       <div className="container mx-auto py-4 text-gray-400">
         
         <div className="text-center">

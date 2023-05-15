@@ -27,7 +27,7 @@ const Header = () => {
 
   const [showSearch, setShowSearch] = useState(false);
   const { isAuth, currentUser } = useContext(AuthContext);
-  console.log("User : ", currentUser);
+  // console.log("User : ", currentUser);
 
   const [userClick, setUserAnchorEl] = useState(null);
 
@@ -55,6 +55,10 @@ const Header = () => {
     );
   };
 
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+  };
+
   // Add event listener to track window scroll
   if (typeof window !== "undefined") {
     window.addEventListener("scroll", handleScroll);
@@ -62,6 +66,7 @@ const Header = () => {
 
   return (
     <div
+      onContextMenu={handleContextMenu}
       onMouseLeave={handleClose}
       className={`${
         showSearch
@@ -109,7 +114,7 @@ const Header = () => {
       <div className="flex items-center">
         {isAuth ? (
           <div className="flex">
-            <span className="text-white mr-3 pt-1 text-md font-medium ">
+            <span className="text-white mr-3 pt-1 text-md font-medium hidden lg:flex md:flex xl:flex">
               {currentUser ? "Hi," + currentUser : ""}
             </span>
             <div

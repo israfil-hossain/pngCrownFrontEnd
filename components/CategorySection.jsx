@@ -9,7 +9,7 @@ const Categories = () => {
     dots: false,
     infinite: true,
     speed: 800,
-    slidesToShow: 10,
+    slidesToShow: 8,
     slidesToScroll: 5,
     arrows: false,
     autoplay: true,
@@ -63,9 +63,9 @@ const Categories = () => {
             key={item._id}
 
           >
-            <div className="   border-gray-200 py-1 rounded-md items-center text-center "
+            <div className="   border-gray-200 py-1 px-2 w-32 rounded-md items-center text-center "
             onClick={()=>handleSearch(item?.cat_name)}>
-              <h3 className="text-lg text-[#0D98C9] font-normal cursor-pointer hover:shadow-md"><u>{item?.cat_name}</u></h3>
+              <h4 className="text-lg text-[#0D98C9] font-normal cursor-pointer hover:shadow-md"><u>{item?.cat_name}</u></h4>
             </div>
           </div>
         ))}
@@ -79,9 +79,9 @@ const Categories = () => {
             key={item._id}
 
           >
-            <div className="   border-gray-200 py-1 rounded-md items-center text-center "
+            <div className="   border-gray-200 py-1 px-2 rounded-md items-center text-center "
             onClick={()=>handleSearch(item?.cat_name)}>
-              <h3 className="text-lg text-[#0D98C9] font-normal "><u>{item?.cat_name}</u></h3>
+              <h4 className="text-lg text-[#0D98C9] font-normal "><u>{item?.cat_name}</u></h4>
             </div>
           </div>
         ))}

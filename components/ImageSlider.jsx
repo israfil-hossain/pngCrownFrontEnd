@@ -23,9 +23,10 @@ const ImageSlider = () => {
 
   const fetchData = async () => {
     const res = await API.get("/slider");
-    // console.log("Image Data ==>", res.data);
-    setData(res.data);
+    const filteredData = res.data.filter(item => item.status === "active");
+    setData(filteredData);
   };
+  
 
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
@@ -110,23 +111,14 @@ const ImageSlider = () => {
           by our talented community
         </div>
       </div>
-      {/* For Mobile  */}
-      {/* <div className="absolute bottom-96 lg:hidden  flex w-full flex-col items-center text-center justify-center mx-auto mb-5">
-        <div className="text-gray-50 text-[17px]  font-[900] px-5 flex font-sans">
-          High-quality PNG images are available for free
-        </div>
-        <div className="text-white text-[13px] mt-1 w-full sm:px-5 font-sans">
-          Over 2.7 million+ high quality stock images, <br/> videos and music shared
-          by our talented community
-        </div>
-      </div> */}
+
       {showSearch ? (
         ""
       ) : (
         <>
-          <div className="absolute lg:top-[460px] xl:top-[460px] xs:top-[250px] sm:top-[250px] md:top-[250px] mt-8 flex  w-full flex-col items-center text-center justify-center mx-auto">
+          <div className="absolute lg:top-[495px] xl:top-[495px] xs:top-[250px] sm:top-[250px] md:top-[250px] mt-8 flex  w-full flex-col items-center text-center justify-center mx-auto">
             {/* For Desktop */}
-            <div className="relative rounded-md shadow-sm xl:w-1/2 lg:w-1/2 md:w-80 xs:w-80 sm:w-80 ">
+            <div className="relative rounded-md shadow-sm xl:w-1/2 lg:w-1/2 md:w-80 xs:w-60 sm:w-80 ">
               <form onSubmit={handleSearch}>
                 <input
                   type="text"
@@ -144,26 +136,7 @@ const ImageSlider = () => {
               </form>
             </div>
           </div>
-          {/* For Mobile  */}
-          {/* <div className="absolute  bottom-72  lg:hidden flex w-[98%]  items-center text-center justify-center ">
-            <div className="relative rounded-md shadow-sm ">
-              <form onSubmit={handleSearch}>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="py-4 px-24 pl-5 rounded-md leading-2 bg-white focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
-                />
-                <button
-                  type="submit"
-                  className="absolute hover:cursor-pointer inset-y-0 right-0 px-3 flex items-center hover:bg-indigo-700 hover:rounded-r-md hover:text-white"
-                >
-                  <FiSearch className="w-6 h-6 hover:text-gray-50 " />
-                </button>
-              </form>
-            </div>
-          </div> */}
+         
         </>
       )}
     </div>

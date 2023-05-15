@@ -22,13 +22,6 @@ export default function App({ Component, pageProps }) {
         <meta name="p:domain_verify" content="b5758736f8f74390c0223f4aa7d7ac4f"/>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/pngcrown.png" />
-        <script
-          async={true}
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7562191749444029"
-          crossorigin="anonymous"
-        ></script>
-        
-    
       </Head>
         
       <ThemeProvider theme={theme}>

@@ -12,6 +12,7 @@ import { AuthContext } from "../context/AuthContext.js";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Progress } from "@/components/common/Progress";
 import Link from "next/link";
+import Image from "next/image.js";
 
 const Signin = () => {
     const{signin } = useContext(AuthContext);
@@ -59,18 +60,18 @@ const Signin = () => {
           <div className="mb-6 sm:mx-auto sm:w-full sm:max-w-md flex items-center justify-center">
             <div className="mb-6 sm:mx-auto sm:w-full sm:max-w-md flex items-center justify-center">
               <div className="flex flex-col items-center  text-center justify-between p-10">
-                <img
+                <Image
                   alt=""
                   src="/pngcrown.png"
-                  width="80px"
-                  height="50px"
+                  width={80}
+                  height={50}
                   className="items-center mt-5"
                 />
-                <img
+                <Image
                   alt=""
                   src="/logo2.png"
-                  width="250px"
-                  height="200px "
+                  width={250}
+                  height={200}
                   className="items-center mt-5"
                 />
               </div>

@@ -36,12 +36,12 @@ const CommonLayout = ({ children }) => {
       <Header />
       <div className="mb-10 ">{children}</div>
       <div style={{ position: "fixed", bottom: "10px", right: "10px" }}>
-        <Link href="https://www.pinterest.es/png_crown/">
+        <Link href="https://www.pinterest.es/png_crown/" target="_blank">
           <div className=" animate-bounce rounded-full hover:shadow-lg  px-4 py-4 mb-4 cursor-pointer">
             <BsPinterest className="text-red-500 w-10 h-10 sm:w-10 sm:h-10 md:w-10 md:h-10" />
           </div>
         </Link>
-        <Link href="https://www.instagram.com/pngcrown/">
+        <Link href="https://www.instagram.com/pngcrown/" target="_blank">
           <div className="animate-bounce hover:shadow-lg   rounded-full  py-5 px-2 flex justify-center cursor-pointer">
             {/* <BsInstagram className="text-white w-9 h-9" /> */}
             <Image src="/instagram.png" alt="" width={32} height={32} />
@@ -52,7 +52,7 @@ const CommonLayout = ({ children }) => {
         {/* <BsInstagram className="text-white w-9 h-9" /> */}
         {/* <Image src="/up-arrow.png" alt="" width={30} height={30} /> */}
         <div
-          className={`fixed bottom-6 right-6 p-2 rounded-full ${
+          className={`fixed bottom-6 p-2 rounded-full ${
             isVisible ? "opacity-100" : "opacity-0"
           } transition-opacity duration-300`}
           onClick={scrollToTop}

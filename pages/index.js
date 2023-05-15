@@ -65,7 +65,7 @@ export default function Home() {
   };
  
 
-  console.log("Image data is ", data);
+  // console.log("Image data is ", data);
   return (
     <>
       <div className="overflow-hidden"  onContextMenu={handleContextMenu}>

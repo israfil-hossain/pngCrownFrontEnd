@@ -12,6 +12,7 @@ import { Progress } from "@/components/common/Progress";
 import Link from "next/link";
 import signupValidationSchema from "@/utils/validation/signupValidation";
 import UserService from "@/services/UserService";
+import Image from "next/image";
 
 const Signin = () => {
   const router = useRouter();
@@ -50,18 +51,18 @@ const Signin = () => {
           <div className="mb-6 sm:mx-auto sm:w-full sm:max-w-md flex items-center justify-center">
             <div className="mb-6 sm:mx-auto sm:w-full sm:max-w-md flex items-center justify-center">
               <div className="flex flex-col items-center  text-center justify-between p-10 mt-16">
-                <img
+                <Image
                   alt=""
                   src="/pngcrown.png"
-                  width="80px"
-                  height="50px"
+                  width={80}
+                  height={50}
                   className="items-center mt-5"
                 />
-                <img
+                <Image
                   alt=""
                   src="/logo2.png"
-                  width="250px"
-                  height="200px "
+                  width={250}
+                  height={200}
                   className="items-center mt-5"
                 />
               </div>
